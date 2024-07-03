@@ -1,51 +1,26 @@
-name: Build and SonarQube Scan
+name: Build
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+
 
 jobs:
   build:
-    name: Build and SonarQube Scan on GCP
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for better relevancy of analysis
-
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Run build and SonarQube scan on GCP
-        run: |
-          ssh -o StrictHostKeyChecking=no ${GCP_USER}@${GCP_HOST} << 'EOF'
-            # Navigate to the project directory
-            cd /path/to/your/project
-
-            # Pull the latest changes from GitHub
-            git pull origin main
-
-            # Run your build script
-            ./build.sh
-
-            # Run the SonarQube scan
-            sonar-scanner \
-              -Dsonar.projectKey=random1 \
-              -Dsonar.sources=src \
-              -Dsonar.host.url=${SONAR_HOST_URL} \
-              -Dsonar.login=${SONAR_TOKEN}
-          EOF
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: sonarsource/sonarqube-scan-action@master
         env:
-          GCP_USER: ${{ secrets.GCP_USER }}
-          GCP_HOST: ${{ secrets.GCP_HOST }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
