@@ -59,7 +59,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-            -Dsonar.projectKey=your_project_key
+            -Dsonar.projectKey=random1
             -Dsonar.sources=src
             -Dsonar.java.binaries=out
 
