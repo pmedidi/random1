@@ -48,6 +48,16 @@ jobs:
           - group_8_SOLID_GRASP
           - group_9_SOLID_GRASP
           - group_10_SOLID_GRASP
+          - codesmells1
+          - codesmells2
+          - codesmells3
+          - codesmells4
+          - codesmells5
+          - codesmells6
+          - codesmells7
+          - codesmells8
+          - codesmells9
+          - codesmells10
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
