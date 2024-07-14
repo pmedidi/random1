@@ -40,22 +40,23 @@ jobs:
         project:
           - group_1_SOLID_GRASP
           - group_2_SOLID_GRASP
-          # Add more projects here
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: 17
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin' # or 'zulu' or 'adopt'
+        java-version: 17
 
-      - name: Run SonarQube Scan for ${{ matrix.project }}
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          projectBaseDir: ${{ matrix.project }}
+    - name: Run SonarQube Scan for ${{ matrix.project }}
+      uses: sonarsource/sonarqube-scan-action@master
+      with:
+        projectBaseDir: ${{ matrix.project }}
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
 
  
