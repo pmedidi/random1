@@ -42,6 +42,7 @@ jobs:
           - group_2_SOLID_GRASP
           - group_3_SOLID_GRASP
           - group_4_SOLID_GRASP
+          - group_5_SOLID_GRASP
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
