@@ -50,22 +50,10 @@ jobs:
         distribution: 'temurin'
         java-version: 17
 
-    - name: Run SonarQube Scan for group_1_SOLID_GRASP
-      if: matrix.project == 'group_1_SOLID_GRASP'
+    - name: Run SonarQube Scan for ${{ matrix.project }}
       uses: sonarsource/sonarqube-scan-action@master
       with:
-        projectBaseDir: group_1_SOLID_GRASP
+        projectBaseDir: ${{ matrix.project }}
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-    - name: Run SonarQube Scan for group_2_SOLID_GRASP
-      if: matrix.project == 'group_2_SOLID_GRASP'
-      uses: sonarsource/sonarqube-scan-action@master
-      with:
-        projectBaseDir: group_2_SOLID_GRASP
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-
